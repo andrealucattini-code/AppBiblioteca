@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:app_biblioteca/models/book.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -26,6 +24,18 @@ class BookRepository{
     // da json grezzo a Book tipizzato
     // a questo punto map restituisce non piu una lista di Map
     // ma un Iterable<Book>
+    .toList();
+  }
+
+  Future<List<Book>> searchBooks(String query) async{
+    final response = await _client
+    .from('books')
+    .select('* ,authors(full_name)')
+    .or('title.ilike.%$query%,authors.full_name.ilike.%$query%')
+    .order('title');
+
+    return (response as List)
+    .map((json) => Book.fromJson(json as Map<String,dynamic>))
     .toList();
   }
 }
