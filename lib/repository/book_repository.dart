@@ -7,7 +7,7 @@ class BookRepository{
   
 
   // Legge tutte i libri
-  Future getAllBooks() async{
+  Future <List<Book>> getAllBooks() async{
     final response  = await _client
     .from('books') // selezionala
     .select('*, authors(full_name)')
