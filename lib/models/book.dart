@@ -6,6 +6,7 @@ class Book{
   final String? isbn;
   final String? genre;
   final String? coverUrl;
+  final int? availableCopies;
   final int totalCopies;
 
   Book({
@@ -16,8 +17,23 @@ class Book{
     this.isbn,
     this.genre,
     this.coverUrl,
+    this.availableCopies,
     required this.totalCopies,
   });
+
+  Book copyWith({int? availableCopies}){
+    return Book(
+      id: id,
+      title: title,
+      authorId: authorId,
+      authorName: authorName,
+      isbn: isbn,
+      genre: genre,
+      coverUrl: coverUrl,
+      totalCopies: totalCopies,
+      availableCopies:  availableCopies ?? this.availableCopies,
+    );
+  }
 
   // da JSON (lettura da supabase)
   factory Book.fromJson(Map <String, dynamic> json){
